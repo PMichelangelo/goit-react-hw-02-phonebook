@@ -8,18 +8,90 @@ import { nanoid } from 'nanoid';
 class Phonebook extends Component {
   state = {
     contacts: [],
+    filter: '',
   };
 
+  isDublicate({ name, phone }) {
+    const { contacts } = this.state;
+    const normalizedName = name.toLowerCase();
+    const normalizedPhone = phone.trim();
+
+    const dublicated = contacts.find(item => {
+      const normalizedCurrentName = item.name.toLowerCase();
+      const normalizedCurentPhone = item.phone.trim();
+      return (
+        normalizedCurrentName === normalizedName &&
+        normalizedCurentPhone === normalizedPhone
+      );
+    });
+
+    return Boolean(dublicated);
+  }
+
   addContact = data => {
+    if (this.isDublicate(data)) {
+      return alert(
+        `Contact ${data.name} with tel: ${data.phone} already in phonebook`
+      );
+    }
+    this.setState(({ contacts }) => {
+      const newContact = {
+        id: nanoid(),
+        ...data,
+      };
+      return {
+        contacts: [...contacts, newContact],
+      };
+    });
+
     console.log(data);
   };
+
+  deleteContact = id => {
+    this.setState(({ contacts }) => {
+      const newContacts = contacts.filter(item => item.id !== id);
+
+      return {
+        contacts: newContacts,
+      };
+    });
+  };
+
+  changeFilter = target => {
+    this.setState({ filter: target.value });
+  };
+
+  getFiltredContacts() {
+    const { filter, contacts } = this.state;
+
+    const normalizedFilter = filter.toLowerCase();
+    const filtredContacts = contacts.filter(({ name, phone }) => {
+      const normalizedName = name.toLowerCase();
+      const normalizedPhone = phone.trim();
+
+      return (
+        normalizedName.includes(normalizedFilter) ||
+        normalizedPhone.includes(normalizedFilter)
+      );
+    });
+
+    return filtredContacts;
+  }
   render() {
-    const { contacts } = this.state;
-    const { addContact } = this;
+    const { addContact, deleteContact, changeFilter } = this;
+    const contacts = this.getFiltredContacts();
     return (
       <div className={styles.phonebookWrapper}>
         <PhonebookForm onSubmit={addContact} />
-        <ContactsList items={contacts} />
+        <div>
+          <input
+            type="text"
+            name="filter"
+            placeholder="Search"
+            onChange={changeFilter}
+          />
+          <ContactsList items={contacts} deleteContact={deleteContact} />
+        </div>
       </div>
     );
   }
