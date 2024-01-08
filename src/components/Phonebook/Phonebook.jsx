@@ -89,6 +89,7 @@ class Phonebook extends Component {
             name="filter"
             placeholder="Search"
             onChange={changeFilter}
+            className={styles.filter}
           />
           <ContactsList items={contacts} deleteContact={deleteContact} />
         </div>

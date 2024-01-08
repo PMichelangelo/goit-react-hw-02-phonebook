@@ -2,9 +2,9 @@ import styles from './contactsList.module.css';
 
 const ContactsList = ({ items, deleteContact }) => {
   const elements = items.map(({ id, name, phone }) => (
-    <li key={id}>
+    <li key={id} className={styles.listItem}>
       {name}: {phone}{' '}
-      <button type="button" onClick={() => deleteContact(id)}>
+      <button type="button" className={styles.deleteContactBtn} onClick={() => deleteContact(id)}>
         Delete
       </button>
     </li>

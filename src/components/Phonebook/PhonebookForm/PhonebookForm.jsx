@@ -55,7 +55,7 @@ class PhonebookForm extends Component {
               onChange={handleChange}
               required
             />
-            <button type="submit">Add contact</button>
+            <button type="submit" className={styles.addContactBtn}>Add contact</button>
           </div>
         </form>
         <h1>Contacts</h1>
