@@ -57,8 +57,8 @@ class Phonebook extends Component {
     });
   };
 
-  changeFilter = target => {
-    this.setState({ filter: target.value });
+  changeFilter = e => {
+    this.setState({ filter: e.target.value });
   };
 
   getFiltredContacts() {
