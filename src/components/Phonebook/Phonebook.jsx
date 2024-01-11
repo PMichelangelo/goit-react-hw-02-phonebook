@@ -14,14 +14,14 @@ class Phonebook extends Component {
   isDublicate({ name, phone }) {
     const { contacts } = this.state;
     const normalizedName = name.toLowerCase();
-    const normalizedPhone = phone.trim();
+    //const normalizedPhone = phone.trim();
 
     const dublicated = contacts.find(item => {
       const normalizedCurrentName = item.name.toLowerCase();
-      const normalizedCurentPhone = item.phone.trim();
+      //const normalizedCurentPhone = item.phone.trim();
       return (
-        normalizedCurrentName === normalizedName &&
-        normalizedCurentPhone === normalizedPhone
+        normalizedCurrentName === normalizedName
+        //normalizedCurentPhone === normalizedPhone
       );
     });
 
